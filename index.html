@@ -232,7 +232,10 @@
     <script>
       "use strict";
 
-      var fireballSize = 22;
+      const fireballSize = 22;
+      const wizardSpeed = 3;
+      const wizardWidth = 70;
+
       var getFireballSpeed = function(left) {
         if (!left) {
           return 2;
@@ -240,8 +243,7 @@
 
         return 5;
       };
-      var wizardSpeed = 3;
-      var wizardWidth = 70;
+
       var getWizardHeight = function() {
         return wizardWidth * 1.337;
       };
