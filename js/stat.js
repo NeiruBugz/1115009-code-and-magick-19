@@ -1,21 +1,21 @@
 'use strict';
 
-const BLOCK_HEIGHT = 270;
-const BLOCK_WIDTH = 420;
-const BLOCK_X = 100;
-const BLOCK_Y = 10;
-const BLOCK_COLOR = '#fff';
+var BLOCK_HEIGHT = 270;
+var BLOCK_WIDTH = 420;
+var BLOCK_X = 100;
+var BLOCK_Y = 10;
+var BLOCK_COLOR = '#fff';
 
-const SHADOW_GAP = 10;
-const SHADOW_COLOR = 'rgba(0,0,0,0.7)';
+var SHADOW_GAP = 10;
+var SHADOW_COLOR = 'rgba(0,0,0,0.7)';
 
-const COLUMN_GAP = 50;
-const COLUMN_WIDTH = 40;
-const MAX_COLUMN_HEIGHT = 150;
+var COLUMN_GAP = 50;
+var COLUMN_WIDTH = 40;
+var MAX_COLUMN_HEIGHT = 150;
 
-const FONT = '16px PT Mono';
-const FONT_GAP = 30;
-const FONT_COLOR = '#000';
+var FONT = '16px PT Mono';
+var FONT_GAP = 30;
+var FONT_COLOR = '#000';
 
 var renderBlock = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -34,7 +34,7 @@ var getMaxElement = function (times) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  const maxTime = getMaxElement(times);
+  var maxTime = getMaxElement(times);
 
   renderBlock(ctx, BLOCK_X + SHADOW_GAP, BLOCK_Y + SHADOW_GAP, SHADOW_COLOR);
   renderBlock(ctx, 100, 10, BLOCK_COLOR);
