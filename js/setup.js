@@ -35,11 +35,67 @@ var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var CHARACTERS_COUNT = 4;
 
+var MIN_NAME_LENGTH = 2;
+var MAX_NAME_LENGTH = 25;
+
 var charactersList = document.querySelector('.setup-similar-list');
 var characterCustomisation = document.querySelector('.setup');
 var characterTemplate = document.querySelector('#similar-wizard-template')
   .content.children[0];
 var chars = document.querySelector('.setup-similar');
+var openSetupDialogButton = document.querySelector('.setup-open');
+var closeSetupDialogButton = characterCustomisation.querySelector('.setup-close');
+var characterNameInput = characterCustomisation.querySelector('.setup-user-name');
+
+
+openSetupDialogButton.addEventListener('click', function () {
+  characterCustomisation.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      characterCustomisation.classList.add('hidden');
+    }
+  });
+});
+
+openSetupDialogButton.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    characterCustomisation.classList.remove('hidden');
+  }
+});
+
+closeSetupDialogButton.addEventListener('click', function () {
+  characterCustomisation.classList.add('hidden');
+});
+
+closeSetupDialogButton.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    characterCustomisation.classList.add('hidden');
+  }
+});
+
+characterNameInput.addEventListener('invalid', function () {
+  if (characterNameInput.validity.tooShort) {
+    characterNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+  } else if (characterNameInput.validity.tooLong) {
+    characterNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+  } else if (characterNameInput.validity.valueMissing) {
+    characterNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    characterNameInput.setCustomValidity('');
+  }
+});
+
+characterNameInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < MIN_NAME_LENGTH) {
+    target.setCustomValidity('Имя должно состоять минимум из ' + MIN_NAME_LENGTH + '-х символов');
+  } else if (target.value.leading > MAX_NAME_LENGTH) {
+    target.setCustomValidity('Имя должно состоять максимум из ' + MAX_NAME_LENGTH + '-х символов');
+  } else {
+    target.setCustomValidity('');
+  }
+});
 
 var generateRandomIndex = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
