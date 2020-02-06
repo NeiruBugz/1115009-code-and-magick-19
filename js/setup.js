@@ -59,8 +59,11 @@ var closeSetupDialogButton = characterCustomisation.querySelector('.setup-close'
 
 var characterNameInput = characterCustomisation.querySelector('.setup-user-name');
 var wizardCoat = characterCustomisation.querySelector('.wizard-coat');
+var wizardCoatInput = characterCustomisation.querySelector('input[name="coat-color"]');
 var wizardEyes = characterCustomisation.querySelector('.wizard-eyes');
+var wizardEyesInput = characterCustomisation.querySelector('input[name="eyes-color"]');
 var fireballColor = characterCustomisation.querySelector('.setup-fireball-wrap');
+var fireballColorInput = characterCustomisation.querySelector('input[name="fireball-color"]');
 
 var onEscDialog = function (evt) {
   if (evt.key === ESC_KEY) {
@@ -100,17 +103,23 @@ closeSetupDialogButton.addEventListener('keydown', function (evt) {
 
 wizardCoat.addEventListener('click', function (evt) {
   evt.preventDefault();
-  wizardCoat.style.fill = COAT_COLORS[generateRandomIndex(0, COAT_COLORS.length)];
+  var color = COAT_COLORS[generateRandomIndex(0, COAT_COLORS.length)];
+  wizardCoat.style.fill = color;
+  wizardCoatInput.value = color;
 });
 
 wizardEyes.addEventListener('click', function (evt) {
   evt.preventDefault();
-  wizardEyes.style.fill = EYES_COLORS[generateRandomIndex(0, EYES_COLORS.length)];
+  var color = EYES_COLORS[generateRandomIndex(0, EYES_COLORS.length)];
+  wizardEyes.style.fill = color;
+  wizardEyesInput.value = color;
 });
 
 fireballColor.addEventListener('click', function (evt) {
   evt.preventDefault();
-  fireballColor.style.backgroundColor = FIREBALL_COLORS[generateRandomIndex(0, FIREBALL_COLORS.length)];
+  var color = FIREBALL_COLORS[generateRandomIndex(0, FIREBALL_COLORS.length)];
+  fireballColor.style.backgroundColor = color;
+  fireballColorInput.value = color;
 });
 
 characterNameInput.addEventListener('invalid', function () {
