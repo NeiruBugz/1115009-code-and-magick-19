@@ -1,5 +1,8 @@
 'use strict';
 
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
+
 var NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -8,7 +11,7 @@ var NAMES = [
   'Виктор',
   'Юлия',
   'Люпита',
-  'Вашингтон'
+  'Вашингтон',
 ];
 
 var SURNAMES = [
@@ -19,7 +22,7 @@ var SURNAMES = [
   'Онопко',
   'Топольницкая',
   'Нионго',
-  'Ирвинг'
+  'Ирвинг',
 ];
 
 var COAT_COLORS = [
@@ -28,7 +31,7 @@ var COAT_COLORS = [
   'rgb(146, 100, 161)',
   'rgb(56, 159, 117)',
   'rgb(215, 210, 55)',
-  'rgb(0, 0, 0)'
+  'rgb(0, 0, 0)',
 ];
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
@@ -47,38 +50,51 @@ var openSetupDialogButton = document.querySelector('.setup-open');
 var closeSetupDialogButton = characterCustomisation.querySelector('.setup-close');
 var characterNameInput = characterCustomisation.querySelector('.setup-user-name');
 
+var onEscDialog = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closeDialog();
+  }
+};
+
+var openDialog = function () {
+  characterCustomisation.classList.remove('hidden');
+  document.addEventListener('keydown', onEscDialog);
+};
+
+var closeDialog = function () {
+  characterCustomisation.classList.add('hidden');
+  document.addEventListener('keydown', onEscDialog);
+};
 
 openSetupDialogButton.addEventListener('click', function () {
-  characterCustomisation.classList.remove('hidden');
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      characterCustomisation.classList.add('hidden');
-    }
-  });
+  openDialog();
 });
 
 openSetupDialogButton.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    characterCustomisation.classList.remove('hidden');
+  if (evt.key === ENTER_KEY) {
+    openDialog();
   }
 });
 
 closeSetupDialogButton.addEventListener('click', function () {
-  characterCustomisation.classList.add('hidden');
+  closeDialog();
 });
 
 closeSetupDialogButton.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    characterCustomisation.classList.add('hidden');
+  if (evt.key === ENTER_KEY) {
+    closeDialog();
   }
 });
 
 characterNameInput.addEventListener('invalid', function () {
   if (characterNameInput.validity.tooShort) {
-    characterNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+    characterNameInput.setCustomValidity(
+      'Имя должно состоять минимум из 2-х символов',
+    );
   } else if (characterNameInput.validity.tooLong) {
-    characterNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+    characterNameInput.setCustomValidity(
+      'Имя не должно превышать 25-ти символов',
+    );
   } else if (characterNameInput.validity.valueMissing) {
     characterNameInput.setCustomValidity('Обязательное поле');
   } else {
@@ -89,9 +105,13 @@ characterNameInput.addEventListener('invalid', function () {
 characterNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
   if (target.value.length < MIN_NAME_LENGTH) {
-    target.setCustomValidity('Имя должно состоять минимум из ' + MIN_NAME_LENGTH + '-х символов');
+    target.setCustomValidity(
+      'Имя должно состоять минимум из ' + MIN_NAME_LENGTH + '-х символов',
+    );
   } else if (target.value.leading > MAX_NAME_LENGTH) {
-    target.setCustomValidity('Имя должно состоять максимум из ' + MAX_NAME_LENGTH + '-х символов');
+    target.setCustomValidity(
+      'Имя должно состоять максимум из ' + MAX_NAME_LENGTH + '-х символов',
+    );
   } else {
     target.setCustomValidity('');
   }
@@ -108,7 +128,7 @@ var generateCharacterData = function () {
       ' ' +
       SURNAMES[generateRandomIndex(0, 7)],
     coatColor: COAT_COLORS[generateRandomIndex(0, 5)],
-    eyesColor: EYES_COLORS[generateRandomIndex(0, 5)]
+    eyesColor: EYES_COLORS[generateRandomIndex(0, 5)],
   };
 };
 
@@ -143,5 +163,4 @@ var charactersPool = fillPoolWithCharacters(CHARACTERS_COUNT);
 
 generateCharacterList(charactersList, charactersPool);
 
-characterCustomisation.classList.remove('hidden');
 chars.classList.remove('hidden');
