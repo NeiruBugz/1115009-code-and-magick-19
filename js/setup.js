@@ -36,6 +36,14 @@ var COAT_COLORS = [
 
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848',
+];
+
 var CHARACTERS_COUNT = 4;
 
 var MIN_NAME_LENGTH = 2;
@@ -48,7 +56,11 @@ var characterTemplate = document.querySelector('#similar-wizard-template')
 var chars = document.querySelector('.setup-similar');
 var openSetupDialogButton = document.querySelector('.setup-open');
 var closeSetupDialogButton = characterCustomisation.querySelector('.setup-close');
+
 var characterNameInput = characterCustomisation.querySelector('.setup-user-name');
+var wizardCoat = characterCustomisation.querySelector('.wizard-coat');
+var wizardEyes = characterCustomisation.querySelector('.wizard-eyes');
+var fireballColor = characterCustomisation.querySelector('.setup-fireball-wrap');
 
 var onEscDialog = function (evt) {
   if (evt.key === ESC_KEY) {
@@ -86,15 +98,26 @@ closeSetupDialogButton.addEventListener('keydown', function (evt) {
   }
 });
 
+wizardCoat.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  wizardCoat.style.fill = COAT_COLORS[generateRandomIndex(0, COAT_COLORS.length)];
+});
+
+wizardEyes.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  wizardEyes.style.fill = EYES_COLORS[generateRandomIndex(0, EYES_COLORS.length)];
+});
+
+fireballColor.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  fireballColor.style.backgroundColor = FIREBALL_COLORS[generateRandomIndex(0, FIREBALL_COLORS.length)];
+});
+
 characterNameInput.addEventListener('invalid', function () {
   if (characterNameInput.validity.tooShort) {
-    characterNameInput.setCustomValidity(
-      'Имя должно состоять минимум из 2-х символов',
-    );
+    characterNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
   } else if (characterNameInput.validity.tooLong) {
-    characterNameInput.setCustomValidity(
-      'Имя не должно превышать 25-ти символов',
-    );
+    characterNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
   } else if (characterNameInput.validity.valueMissing) {
     characterNameInput.setCustomValidity('Обязательное поле');
   } else {
@@ -105,13 +128,9 @@ characterNameInput.addEventListener('invalid', function () {
 characterNameInput.addEventListener('input', function (evt) {
   var target = evt.target;
   if (target.value.length < MIN_NAME_LENGTH) {
-    target.setCustomValidity(
-      'Имя должно состоять минимум из ' + MIN_NAME_LENGTH + '-х символов',
-    );
+    target.setCustomValidity('Имя должно состоять минимум из ' + MIN_NAME_LENGTH + '-х символов');
   } else if (target.value.leading > MAX_NAME_LENGTH) {
-    target.setCustomValidity(
-      'Имя должно состоять максимум из ' + MAX_NAME_LENGTH + '-х символов',
-    );
+    target.setCustomValidity('Имя должно состоять максимум из ' + MAX_NAME_LENGTH + '-х символов');
   } else {
     target.setCustomValidity('');
   }
